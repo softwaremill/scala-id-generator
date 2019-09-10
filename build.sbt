@@ -1,10 +1,14 @@
-lazy val commonSettings = commonSmlBuildSettings ++ ossPublishSettings ++ Seq(
+lazy val scala213 = "2.13.0"
+lazy val scala212 = "2.12.6"
+lazy val supportedScalaVersions = List(scala213, scala212)
+
+lazy val commonSettings = ossPublishSettings ++ Seq(
   organization := "com.softwaremill.common",
-  scalaVersion := "2.12.6"
+  scalaVersion := scala213
 )
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5" % "test"
-val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
+val scalaTest = "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
 
 val fastUuid = Seq(
   "com.eatthepath" % "fast-uuid" % "0.1",
@@ -15,8 +19,10 @@ lazy val rootProject = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "id-generator",
+    crossScalaVersions := supportedScalaVersions,
     libraryDependencies ++= Seq(
       scalaTest, scalaLogging
     )  ++ fastUuid
   )
 
+addCompilerPlugin("org.wartremover" %% "wartremover" % "2.4.2")
