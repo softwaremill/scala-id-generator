@@ -1,10 +1,15 @@
+lazy val scala212 = "2.12.10"
+lazy val scala213 = "2.13.1"
+
+lazy val supportedScalaVersions = List(scala212, scala213)
+
 lazy val commonSettings = commonSmlBuildSettings ++ ossPublishSettings ++ Seq(
   organization := "com.softwaremill.common",
-  scalaVersion := "2.12.6"
+  crossScalaVersions := supportedScalaVersions
 )
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5" % "test"
-val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
+val scalaTest = "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+val scalaLogging = "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
 
 val fastUuid = Seq(
   "com.eatthepath" % "fast-uuid" % "0.1",
