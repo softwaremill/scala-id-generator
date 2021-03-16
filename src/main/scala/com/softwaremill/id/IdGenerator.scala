@@ -45,7 +45,12 @@ class DefaultIdGenerator(workerId: Long = 1, datacenterId: Long = 1, epoch: Long
   *
   * Single threaded!
   */
-private[id] class IdWorker(workerId: Long, datacenterId: Long, epoch: Long, var sequence: Long = 0L) extends StrictLogging {
+private[id] class IdWorker(
+    workerId: Long, 
+    datacenterId: Long, 
+    var sequence: Long = 0L,
+    val epoch: Long = 1288834974657L,
+) extends StrictLogging {
 
   private val workerIdBits     = 5L
   private val datacenterIdBits = 5L
