@@ -1,5 +1,3 @@
-import com.softwaremill.PublishTravis.publishTravisSettings
-
 lazy val scala212 = "2.12.10"
 lazy val scala213 = "2.13.1"
 
@@ -26,6 +24,5 @@ lazy val rootProject = (project in file("."))
       scalaTest, scalaLogging
     )  ++ fastUuid
   )
-  .settings(publishTravisSettings)
 
 
