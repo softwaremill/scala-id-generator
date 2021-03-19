@@ -20,8 +20,8 @@ trait IdGenerator {
   *
   * *Synchronizes* to assure thread-safety!
   */
-class DefaultIdGenerator(workerId: Long = 1, datacenterId: Long = 1) extends IdGenerator {
-  private val idWorker = new IdWorker(workerId, datacenterId)
+class DefaultIdGenerator(workerId: Long = 1, datacenterId: Long = 1, epoch: Long = 1288834974657L) extends IdGenerator {
+  private val idWorker = new IdWorker(workerId, datacenterId, epoch)
 
   def nextId(): Long = {
     synchronized {
@@ -45,8 +45,12 @@ class DefaultIdGenerator(workerId: Long = 1, datacenterId: Long = 1) extends IdG
   *
   * Single threaded!
   */
-private[id] class IdWorker(workerId: Long, datacenterId: Long, var sequence: Long = 0L) extends StrictLogging {
-  val twepoch = 1288834974657L
+private[id] class IdWorker(
+    workerId: Long, 
+    datacenterId: Long, 
+    var sequence: Long = 0L,
+    val epoch: Long = 1288834974657L,
+) extends StrictLogging {
 
   private val workerIdBits     = 5L
   private val datacenterIdBits = 5L
@@ -103,13 +107,13 @@ private[id] class IdWorker(workerId: Long, datacenterId: Long, var sequence: Lon
     }
 
     lastTimestamp = timestamp
-    ((timestamp - twepoch) << timestampLeftShift) |
+    ((timestamp - epoch) << timestampLeftShift) |
       (datacenterId << datacenterIdShift) |
       (workerId << workerIdShift) |
       sequence
   }
 
-  def idForTimestamp(timestamp: Long): Long = (timestamp - twepoch) << timestampLeftShift
+  def idForTimestamp(timestamp: Long): Long = (timestamp - epoch) << timestampLeftShift
 
   protected def tilNextMillis(lastTimestamp: Long): Long = {
     var timestamp = timeGen()

@@ -70,7 +70,7 @@ class DefaultIdGeneratorSpec extends WordSpec with MustMatchers {
         val t = System.currentTimeMillis
         worker.timeMaker = () => t
         val id = worker.nextId
-        ((id & timestampMask) >> 22) must be(t - worker.twepoch)
+        ((id & timestampMask) >> 22) must be(t - worker.epoch)
       }
     }
 
