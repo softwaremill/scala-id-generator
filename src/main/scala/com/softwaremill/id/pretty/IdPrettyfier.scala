@@ -110,7 +110,7 @@ object IdPrettifier {
 }
 
 object PrettyIdGenerator {
-  val singleNode = new PrettyIdGenerator(new DefaultIdGenerator(), IdPrettifier.default)
+  lazy val singleNode = new PrettyIdGenerator(new DefaultIdGenerator(), IdPrettifier.default)
   def distributed(workerId: Long, datacenterId: Long) =
     new PrettyIdGenerator(new DefaultIdGenerator(workerId, datacenterId), IdPrettifier.default)
 }
