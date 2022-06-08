@@ -21,7 +21,7 @@ trait IdGenerator {
   * *Synchronizes* to assure thread-safety!
   */
 class DefaultIdGenerator(workerId: Long = 1, datacenterId: Long = 1, epoch: Long = 1288834974657L) extends IdGenerator {
-  private val idWorker = new IdWorker(workerId, datacenterId, epoch)
+  private val idWorker = new IdWorker(workerId = workerId, datacenterId = datacenterId, epoch = epoch)
 
   def nextId(): Long = {
     synchronized {
