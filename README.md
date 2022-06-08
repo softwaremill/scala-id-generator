@@ -8,7 +8,7 @@ which generates time-based ids. Besides that library provide `IdPrettifier` whic
 SBT depedency:
 
 ````scala
-libraryDependencies += "com.softwaremill.common" %% "id-generator" % "1.3.1"
+libraryDependencies += "com.softwaremill.common" %% "id-generator" % "1.4.0"
 ````
 
 Examples
