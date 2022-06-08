@@ -1,17 +1,18 @@
 package com.softwaremill.id.pretty
 
 import com.softwaremill.id.DefaultIdGenerator
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class IdPrettifierSpec extends FlatSpec with Matchers {
+class IdPrettifierSpec extends AnyFlatSpec with Matchers {
   behavior of "IdPrettifier"
 
-  val max       = Long.MaxValue
+  val max = Long.MaxValue
   val exampleId = 824227036833910784L
 
   it should "generate pretty IDs with leading zeros" in {
     val default = IdPrettifier.default
-    val maxPrettyId     = default.prettify(max)
+    val maxPrettyId = default.prettify(max)
     val examplePrettyId = default.prettify(exampleId)
 
     maxPrettyId should be("HPJD-72036-HAPK-58077")
@@ -24,8 +25,8 @@ class IdPrettifierSpec extends FlatSpec with Matchers {
   }
 
   it should "generate pretty IDs without leading zeros" in {
-    val prettifier      = IdPrettifier.custom(leadingZeros = false)
-    val maxPrettyId     = prettifier.prettify(max)
+    val prettifier = IdPrettifier.custom(leadingZeros = false)
+    val maxPrettyId = prettifier.prettify(max)
     val examplePrettyId = prettifier.prettify(exampleId)
 
     maxPrettyId should be("HPJD-72036-HAPK-58077")
@@ -40,8 +41,8 @@ class IdPrettifierSpec extends FlatSpec with Matchers {
 
   it should "find seed of pretty ID with leading zeros" in {
     val prettifiedWithLeading = IdPrettifier.default
-    val maxPrettyId           = prettifiedWithLeading.prettify(max)
-    val examplePrettyId       = prettifiedWithLeading.prettify(exampleId)
+    val maxPrettyId = prettifiedWithLeading.prettify(max)
+    val examplePrettyId = prettifiedWithLeading.prettify(exampleId)
 
     prettifiedWithLeading.toIdSeed("HPJD-72036-HAPK-58077") should be(Right(max))
     prettifiedWithLeading.toIdSeed("ARPJ-27036-GVQS-07849") should be(Right(exampleId))
@@ -50,8 +51,8 @@ class IdPrettifierSpec extends FlatSpec with Matchers {
 
   it should "find seed of pretty ID without leading zeros" in {
     val prettifiedWithoutTrailingZeros = IdPrettifier.custom(leadingZeros = false)
-    val maxPrettyId                    = prettifiedWithoutTrailingZeros.prettify(max)
-    val examplePrettyId                = prettifiedWithoutTrailingZeros.prettify(exampleId)
+    val maxPrettyId = prettifiedWithoutTrailingZeros.prettify(max)
+    val examplePrettyId = prettifiedWithoutTrailingZeros.prettify(exampleId)
 
     prettifiedWithoutTrailingZeros.toIdSeed("HPJD-72036-HAPK-58077") should be(Right(max))
     prettifiedWithoutTrailingZeros.toIdSeed("RPJ-27036-GVQS-07849") should be(Right(exampleId))
@@ -71,7 +72,7 @@ class IdPrettifierSpec extends FlatSpec with Matchers {
   it should "preserve ID monotonicity" in {
     import IdPrettifier.default._
     val idGenerator = new DefaultIdGenerator()
-    val ids         = (1 to 100).map(_ => prettify(idGenerator.nextId()))
+    val ids = (1 to 100).map(_ => prettify(idGenerator.nextId()))
     ids.sorted should be(ids)
     ids.sorted.reverse should be(ids.reverse)
   }

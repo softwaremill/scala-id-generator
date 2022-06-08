@@ -1,12 +1,13 @@
 package com.softwaremill.id.pretty
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class AlphabetCodecSpec extends FlatSpec with Matchers {
+class AlphabetCodecSpec extends AnyFlatSpec with Matchers {
   val codec = new AlphabetCodec(Alphabet.Base23)
   behavior of codec.getClass.getSimpleName
 
-  val max       = Long.MaxValue
+  val max = Long.MaxValue
   val exampleId = 824227036833910784L
 
   it should "encode value" in {

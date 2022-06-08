@@ -2,23 +2,24 @@ package com.softwaremill.id.pretty
 
 import com.fasterxml.uuid.{EthernetAddress, Generators}
 import com.softwaremill.id.DefaultIdGenerator
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class IdPrettifierBenchmarkSpec extends FlatSpec with Matchers {
+class IdPrettifierBenchmarkSpec extends AnyFlatSpec with Matchers {
   behavior of "IdPrettifier"
 
   private def printResult(start: Long, stop: Long) = println(s"${(stop - start) / 1000.0} s")
 
   it should "measure performance of id prettifier" in {
     val idGenerator = new DefaultIdGenerator()
-    val prettifier  = IdPrettifier.default
-    val times       = 1 to 10000
-    val start1      = System.currentTimeMillis()
+    val prettifier = IdPrettifier.default
+    val times = 1 to 10000
+    val start1 = System.currentTimeMillis()
     times.foreach { _ =>
       prettifier.prettify(idGenerator.nextId())
     }
-    val stop1     = System.currentTimeMillis()
-    val start2    = System.currentTimeMillis()
+    val stop1 = System.currentTimeMillis()
+    val start2 = System.currentTimeMillis()
     val generator = Generators.timeBasedGenerator(EthernetAddress.fromInterface())
     times.foreach { _ =>
       generator.generate()
@@ -32,8 +33,8 @@ class IdPrettifierBenchmarkSpec extends FlatSpec with Matchers {
 
   it should "measure performance of calculating seed ID" in {
     val idGenerator = new DefaultIdGenerator()
-    val prettifier  = IdPrettifier.default
-    val times       = 1 to 10000
+    val prettifier = IdPrettifier.default
+    val times = 1 to 10000
     val seeds = times.map { _ =>
       val seed = idGenerator.nextId()
       (seed, prettifier.prettify(seed))
@@ -47,6 +48,5 @@ class IdPrettifierBenchmarkSpec extends FlatSpec with Matchers {
     println("Results for calculating seed:")
     printResult(start, stop)
   }
-
 
 }

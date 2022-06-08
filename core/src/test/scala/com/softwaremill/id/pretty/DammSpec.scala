@@ -1,8 +1,9 @@
 package com.softwaremill.id.pretty
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class DammSpec extends FlatSpec with Matchers {
+class DammSpec extends AnyFlatSpec with Matchers {
   behavior of Damm.getClass.getSimpleName
 
   val max = Long.MaxValue
@@ -17,7 +18,7 @@ class DammSpec extends FlatSpec with Matchers {
     val withChecksum = Damm(max.toString)
 
     (0 until withChecksum.length).foreach { i =>
-      val sb      = new StringBuilder(withChecksum)
+      val sb = new StringBuilder(withChecksum)
       val oldChar = sb.charAt(i).toString.toInt
       val newChar = ((oldChar + 1) % 10).toString
       sb.setCharAt(i, newChar.toCharArray.head)
