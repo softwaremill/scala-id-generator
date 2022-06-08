@@ -17,7 +17,7 @@ class AlphabetCodec(alphabet: Alphabet) extends Codec {
   @tailrec
   private def encode(number: Long, rest: String): String = {
     val modulo: Int = (number % alphabet.base).toInt
-    val result      = alphabet.valueOf(modulo).toString + rest
+    val result = alphabet.valueOf(modulo).toString + rest
     if (number < alphabet.base) {
       result
     } else {

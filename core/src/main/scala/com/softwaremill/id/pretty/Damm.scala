@@ -2,9 +2,7 @@ package com.softwaremill.id.pretty
 
 import scala.annotation.tailrec
 
-/**
-  * Implementation of Damm Check Digit alogrithm take from
-  * http://en.wikipedia.org/wiki/Damm_algorithm
+/** Implementation of Damm Check Digit alogrithm take from http://en.wikipedia.org/wiki/Damm_algorithm
   * https://en.wikibooks.org/wiki/Algorithm_Implementation/Checksums/Damm_Algorithm
   */
 object Damm {
@@ -22,9 +20,9 @@ object Damm {
     Array(2, 5, 8, 1, 4, 3, 6, 7, 9, 0)
   )
 
-  /**
-    * Calculates the checksum from the provided string
-    * @param str a string, only the numerics will be calculated
+  /** Calculates the checksum from the provided string
+    * @param str
+    *   a string, only the numerics will be calculated
     */
   def encode(str: String): Int = {
 
@@ -41,19 +39,16 @@ object Damm {
     fn(0, 0)
   }
 
-  /**
-    * Decorates the string with the checksum
+  /** Decorates the string with the checksum
     */
   def apply(str: String): String = str + encode(str).toString
 
-  /**
-    * Unapply method returning the string without the checksum if it matches otherwise None
+  /** Unapply method returning the string without the checksum if it matches otherwise None
     */
   def unapply(str: String): Option[String] =
     if (isValid(str)) Some(str.substring(0, str.length - 1)) else None
 
-  /**
-    * Determines if the string contains a valid checksum
+  /** Determines if the string contains a valid checksum
     */
   def isValid(str: String): Boolean = encode(str) == 0
 

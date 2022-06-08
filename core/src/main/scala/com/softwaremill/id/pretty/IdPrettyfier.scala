@@ -2,22 +2,26 @@ package com.softwaremill.id.pretty
 
 import com.softwaremill.id.{DefaultIdGenerator, IdGenerator}
 
-/**
-  * It makes Long ids more readable and user friendly, it also adds checksum.
+/** It makes Long ids more readable and user friendly, it also adds checksum.
   *
-  * @param encoder      it the result needs to be monotonic, use monotonic Coded e.g. AlphabetCoded with alphabet where char values are monotonic
-  * @param partsSize    the long is chopped on the parts, here you specify the part length (only even parts are encoded with codec)
-  * @param delimiter    sign between parts
-  * @param leadingZeros prettifier will make id with constant length
+  * @param encoder
+  *   it the result needs to be monotonic, use monotonic Coded e.g. AlphabetCoded with alphabet where char values are
+  *   monotonic
+  * @param partsSize
+  *   the long is chopped on the parts, here you specify the part length (only even parts are encoded with codec)
+  * @param delimiter
+  *   sign between parts
+  * @param leadingZeros
+  *   prettifier will make id with constant length
   */
-class IdPrettifier private(
+class IdPrettifier private (
     encoder: Codec,
     partsSize: Int,
     delimiter: Char,
     leadingZeros: Boolean
 ) {
 
-  val zeroChar         = encoder.encode(0).charAt(0)
+  val zeroChar = encoder.encode(0).charAt(0)
   val maxEncodedLength = encoder.encode(scala.math.pow(10, partsSize).toLong - 1).length
 
   def prettify(idSeed: Long): String = {
